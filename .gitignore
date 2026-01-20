@@ -1,0 +1,14 @@
+.Rproj.user
+.Rhistory
+.RData
+.Ruserdata
+
+# quarto
+/.quarto/
+/_site/
+/_book/
+/site_libs/
+
+# Session Data files
+.RData
+.RDataTmp
