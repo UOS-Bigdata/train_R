@@ -3,9 +3,16 @@ title: "스포츠과학원 재직자교육 - R을 활용한 데이터 분석"
 author: "서울시립대학교 빅데이터 혁신융합대학 사업단"
 date: "today"
 
-format: 
+format:
   html:
     toc: true
+    embed-resources: true
+    fig-cap-location: top
+  docx: 
+    toc: true
+    toc-depth: 2 
+    number-sections: true
+    reference-doc: custom-reference-doc-landscape.docx
 ---
 
 ## 패키지 로드 및 데이터 불러오기
@@ -16,9 +23,9 @@ format:
 
 이때 사용하는 함수가 `library()`이다,
 
--   **설치:** 컴퓨터에 한 번만 하면 됨. (인터넷 필요)
+- **설치:** 컴퓨터에 한 번만 하면 됨. (인터넷 필요)
 
--   **실행:** RStudio를 켤 때마다, 해당 기능을 쓰기 위해 매번 실행해야 함. (오프라인 가능)
+- **실행:** RStudio를 켤 때마다, 해당 기능을 쓰기 위해 매번 실행해야 함. (오프라인 가능)
 
 ```{r}
 #| eval: FALSE
@@ -40,7 +47,10 @@ library(ggplot2)
 search()
 ```
 
-**※ 주의사항:** R의 패키지들은 전 세계 사용자들이 자발적으로 만든 것이므로 아주 드물게 오류가 있을 수 있다는 점을 항상 염두에 두어야 한다.
+::: {.callout-note}
+### 주의사항
+R의 패키지들은 전 세계 사용자들이 자발적으로 만든 것이므로 아주 드물게 오류가 있을 수 있다는 점을 항상 염두에 두어야 한다.
+:::
 
 ### 외부 데이터 불러오기
 
@@ -52,11 +62,14 @@ R에서 데이터를 직접 타이핑해서 입력하는 경우는 거의 없다
 
     R에서 CSV 파일을 불러올 때는 `read.csv()` 함수를 사용한다.
 
-    > **(중요) 파일 경로 지정 팁** 윈도우 탐색기에서 파일 경로를 복사하면 `C:\Users\Data` 처럼 역슬래시(`\`)로 되어 있다. R에서는 이를 인식하지 못하므로, 반드시 슬래시(`/`) 두 개(`\\`)로 바꿔주어야 한다.
-    >
-    > -   \(X\) `"C:\Users\Data\file.csv"`
-    >
-    > -   \(O\) `"C:/Users/Data/file.csv`
+::: {.callout-note}
+### 파일 경로 지정 팁
+
+윈도우 탐색기에서 파일 경로를 복사하면 `C:\Users\Data` 처럼 역슬래시(`\`)로 되어 있다. R에서는 이를 인식하지 못하므로, 반드시 슬래시(`/`) 두 개(`\\`)로 바꿔주어야 한다.
+
+-   \(X\) `"C:\Users\Data\file.csv"`
+-   \(O\) `"C:/Users/Data/file.csv`
+:::
 
 ```{r}
 #| eval: FALSE
@@ -196,7 +209,7 @@ rm(x)   # 변수 x 제거
 
 ## 1.3.1 `numeric` 자료
 
-`R`은 대다수의 자료가 숫자형태로 존재하게 된다. `numeric` 자료는 정수, 실수를 다루며 어떤 변수가`numeric`인지 확인하는 함수는 `is.numeric()`을 통해 이루어진다.
+`R`은 대다수의 자료가 숫자형태로 존재하게 된다. `numeric` 자료는 정수, 실수를 다루며 어떤 변수가 `numeric`인지 확인하는 함수는 `is.numeric()`을 통해 이루어진다.
 
 `R`에서는 대부분의 데이터가 숫자 형태로 표현되며, 이러한 데이터를 `numeric` 타입이라고 한다.\
 `numeric` 자료형은 **정수(integer)**와 **실수(double)**를 모두 포함한다.
@@ -487,16 +500,23 @@ z <- c(1, NULL, 3)   # NULL은 무시됨 c(1, 3)
 엑셀의 시트처럼 **행(row)**과 **열(column)**로 구성되어 있으며,
 각 열은 서로 다른 타입(`numeric`, `character`, `logical` 등)을 가질 수 있다.
 
-```{r}
-#| echo: FALSE
-knitr::include_graphics("png/tidy.png")
-```
 
-위의 그림을 보자. 데이터프레임에서 **열(column)**은 각각 하나의 **변수(variable)**를 나타내고, **행(row)**은 각 변수에 대한 하나의 **관측치(observation)**를 의미한다.
+아래 그림을 보자. 데이터프레임에서 **열(column)**은 각각 하나의 **변수(variable)**를 나타내고, **행(row)**은 각 변수에 대한 하나의 **관측치(observation)**를 의미한다.
+
+::: {#fig-data1}
+
+![](./images/tidy.png){width=80%}
+
+데이터프레임의 구조
+:::
 
 R의 문법을 익히는 가장 효과적인 방법은 실제 데이터를 직접 다뤄보는 것이다. 이번 교육 과정에서는 `ggplot2` 패키지에 내장된 `mpg` 데이터 를 활용하여 실습을 진행한다.
 
+::: {.callout-note}
+### `mpg` 데이터 설명
 `mpg` 데이터는 미국 환경 보호국(US EPA)에서 공개한 자료로, 1999년부터 2008년까지 출시된 자동차 234종의 연비 정보를 담고 있다. 일반적인 엑셀 표와 같이 행(Row)과 열(Column)로 구성된 데이터프레임 형태이다. 별도로 파일을 다운로드할 필요 없이 `ggplot2` 패키지만 로드하면 즉시 사용할 수 있어 연습용 데이터로 널리 사용된다.
+:::
+
 
 ```{r}
 library(ggplot2)
@@ -899,15 +919,34 @@ min(cyl4_cars$hwy)
 | `left_join()`  | 왼쪽 데이터프레임 기준, 오른쪽 값이 없으면 `NA`     |
 | `right_join()` | 오른쪽 데이터프레임 기준, 왼쪽 값이 없으면 `NA`     |
 | `full_join()`  | 양쪽 모든 행을 결합 (합집합), 없는 값은 `NA`로 채움 |
-```{r}
-#| echo: FALSE
-#| out.width: "45%"
-#| fig.show: "hold"
-#| fig.align: "center"
 
-knitr::include_graphics(c("png/full_join.png", "png/inner_join.png"))
-knitr::include_graphics(c("png/left_join.png", "png/right_join.png"))
-```
+::: {#fig-data2}
+
+![](./images/inner_join.png){width=40%}
+
+Inner Join
+:::
+
+::: {#fig-data3}
+
+![](./images/left_join.png){width=40%}
+
+Left Join
+:::
+
+::: {#fig-data4}
+
+![](./images/right_join.png){width=40%}
+
+Right Join
+:::
+
+::: {#fig-data5}
+
+![](./images/full_join.png){width=40%}
+
+Full Join
+:::
 
 
 ```{r}
@@ -1040,10 +1079,13 @@ iris[iris$Species == "setosa" | iris$Species == "virginica", "Sepal.Length"]
 
 `dplyr` 패키지는 데이터프레임을 쉽고 직관적으로 다룰 수 있도록 도와주는 R의 핵심 패키지로, 열 선택, 행 필터링, 정렬, 요약, 그룹화 등 다양한 데이터 처리 작업을 간편하게 수행할 수 있다.
 
-```{r}
-#| echo: FALSE
-knitr::include_graphics("png/tidy2.png")
-```
+::: {#fig-data6}
+
+![](./images/tidy2.png){width=80%}
+
+Dplyr
+:::
+
 
 다음은 `dplyr`에서 자주 사용되는 주요 함수들이다.
 
@@ -1678,6 +1720,7 @@ p
 ```
 
 ```{r}
+#| eval: FALSE
 ggsave("mpg_scatter.png", plot = p, width = 7, height = 5, dpi = 300)
 ```
 
