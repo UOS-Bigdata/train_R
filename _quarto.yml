@@ -1,9 +1,10 @@
 project:
+  type: website
   title: "train_R"
+  output-dir: docs
 
 format:
   html:
     toc: true
     embed-resources: true
-
-
+    fig-cap-location: top
